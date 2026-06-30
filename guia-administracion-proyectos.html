@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Estudio · Administración de Proyectos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF6EC;
+  --paper-2:#F2EBDA;
+  --ink:#1C2541;
+  --ink-soft:#3C476B;
+  --blue:#2F5D8A;
+  --blue-light:#E7EFF5;
+  --critical:#B8432E;
+  --success:#5C7F5E;
+  --amber:#C8902E;
+  --muted:#7A7567;
+  --line:#D8CFB8;
+  --radius:2px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+}
+::selection{background:var(--amber);color:#fff;}
+
+/* ---------- Blueprint grid backdrop ---------- */
+.grid-bg{
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  opacity:0.35;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+h1,h2,h3,h4{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  color:var(--ink);
+  margin:0 0 .4em 0;
+  letter-spacing:-0.01em;
+}
+p{margin:0 0 1em 0;}
+a{color:var(--blue);}
+code, .mono{font-family:'IBM Plex Mono',monospace;}
+
+/* ---------- Layout ---------- */
+.layout{
+  display:flex;
+  max-width:1280px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+.sidebar{
+  width:260px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  padding:28px 18px 40px 28px;
+  border-right:1px solid var(--line);
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--line);}
+.brand{
+  font-family:'Fraunces',serif;
+  font-size:1.05rem;
+  font-weight:700;
+  margin-bottom:2px;
+}
+.brand-sub{
+  font-size:.72rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:24px;
+  display:block;
+}
+.nav-group{margin-bottom:18px;}
+.nav-group-title{
+  font-size:.68rem;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  color:var(--amber);
+  font-weight:600;
+  margin-bottom:6px;
+}
+.nav-group a{
+  display:block;
+  font-size:.85rem;
+  color:var(--ink-soft);
+  text-decoration:none;
+  padding:4px 0 4px 12px;
+  border-left:2px solid transparent;
+  transition:.15s;
+}
+.nav-group a:hover, .nav-group a.active{
+  color:var(--blue);
+  border-left:2px solid var(--blue);
+}
+.content{
+  flex:1;
+  min-width:0;
+  padding:44px 56px 100px 56px;
+}
+@media (max-width:900px){
+  .sidebar{display:none;}
+  .content{padding:28px 20px 80px;}
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  border-bottom:1px solid var(--line);
+  padding-bottom:32px;
+  margin-bottom:48px;
+}
+.hero .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem;
+  color:var(--amber);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  margin-bottom:10px;
+}
+.hero h1{font-size:2.4rem;max-width:720px;}
+.hero p.lead{font-size:1.05rem;color:var(--ink-soft);max-width:620px;}
+.hero .meta{
+  display:flex;
+  gap:24px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+.hero .meta div{
+  font-size:.78rem;
+  color:var(--muted);
+}
+.hero .meta strong{display:block;color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:.85rem;}
+
+/* ---------- Sections ---------- */
+.unit{
+  margin-bottom:14px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;
+  color:var(--amber);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+section.topic{
+  margin-bottom:64px;
+  scroll-margin-top:20px;
+}
+section.topic h2{
+  font-size:1.6rem;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:10px;
+  margin-bottom:18px;
+}
+section.topic h3{
+  font-size:1.05rem;
+  color:var(--blue);
+  margin-top:28px;
+  margin-bottom:10px;
+}
+.subnote{color:var(--muted);font-size:.85rem;}
+
+/* ---------- Definition box ---------- */
+.def{
+  background:var(--blue-light);
+  border-left:3px solid var(--blue);
+  padding:14px 18px;
+  margin:16px 0;
+  border-radius:var(--radius);
+  font-size:.95rem;
+}
+.def strong{color:var(--blue);}
+
+/* ---------- Example box (tied to caso CE Consultores) ---------- */
+.example{
+  background:#fff;
+  border:1px solid var(--line);
+  border-top:3px solid var(--amber);
+  padding:18px 22px;
+  margin:18px 0;
+  border-radius:var(--radius);
+  box-shadow:0 1px 0 rgba(0,0,0,.02);
+}
+.example .tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.68rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--amber);
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+}
+.example .tag::before{content:"◆";}
+.example p:last-child{margin-bottom:0;}
+
+/* ---------- Tables ---------- */
+.table-wrap{overflow-x:auto;margin:18px 0;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  font-size:.88rem;
+}
+caption{
+  text-align:left;
+  font-size:.78rem;
+  color:var(--muted);
+  margin-bottom:6px;
+  font-family:'IBM Plex Mono',monospace;
+}
+th,td{
+  border:1px solid var(--line);
+  padding:8px 12px;
+  text-align:left;
+}
+th{
+  background:var(--ink);
+  color:var(--paper);
+  font-weight:600;
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+tr:nth-child(even) td{background:var(--paper-2);}
+td.num, th.num{text-align:right;font-family:'IBM Plex Mono',monospace;}
+td.crit{color:var(--critical);font-weight:600;}
+td.ok{color:var(--success);font-weight:600;}
+
+/* ---------- Calc / formula box ---------- */
+.calc{
+  background:var(--ink);
+  color:#F2EBDA;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.85rem;
+  padding:14px 18px;
+  border-radius:var(--radius);
+  margin:14px 0;
+  white-space:pre-wrap;
+  line-height:1.7;
+}
+.calc .res{color:#E0B95C;}
+
+/* ---------- Pills / two-col compare ---------- */
+.compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:16px 0;
+}
+@media (max-width:700px){.compare{grid-template-columns:1fr;}}
+.pill{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:var(--radius);
+  padding:14px 16px;
+}
+.pill h4{font-size:.92rem;margin-bottom:6px;}
+.pill.warn{border-color:#e4c9b8;background:#FBF2EA;}
+.pill.warn h4{color:var(--critical);}
+.pill.good{border-color:#cdd9c8;background:#F0F6EE;}
+.pill.good h4{color:var(--success);}
+
+/* ---------- Q&A accordion ---------- */
+.qa-block{margin-top:32px;}
+.qa-block > .unit{margin-bottom:10px;}
+.qa{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  margin-bottom:10px;
+  background:#fff;
+  overflow:hidden;
+}
+.qa-q{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 16px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:.92rem;
+  user-select:none;
+}
+.qa-q .marker{
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--amber);
+  flex-shrink:0;
+  transition:transform .2s;
+}
+.qa.open .qa-q .marker{transform:rotate(45deg);}
+.qa-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .25s ease;
+  padding:0 16px;
+  font-size:.9rem;
+  color:var(--ink-soft);
+  border-top:1px solid transparent;
+}
+.qa.open .qa-a{
+  max-height:600px;
+  padding:0 16px 16px 16px;
+  border-top:1px dashed var(--line);
+  padding-top:12px;
+}
+
+/* ---------- Lists ---------- */
+ul.clean{padding-left:1.1em;margin:0 0 1em 0;}
+ul.clean li{margin-bottom:5px;}
+
+/* ---------- Footer ---------- */
+footer{
+  border-top:1px solid var(--line);
+  margin-top:60px;
+  padding-top:24px;
+  font-size:.8rem;
+  color:var(--muted);
+}
+
+/* small badge */
+.badge{
+  display:inline-block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.68rem;
+  padding:2px 8px;
+  border-radius:20px;
+  background:var(--ink);
+  color:var(--paper);
+  margin-left:8px;
+  vertical-align:middle;
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="layout">
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar">
+  <div class="brand">Guía de Parcial</div>
+  <span class="brand-sub">Administración de Proyectos</span>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Planificación</div>
+    <a href="#metodologias">Metodologías</a>
+    <a href="#organizacion">Organización de proyectos</a>
+    <a href="#equipos">Equipos de trabajo</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Cronograma</div>
+    <a href="#dependencias">Tareas y dependencias</a>
+    <a href="#gantt">Gantt, ruta crítica y holgura</a>
+    <a href="#tamano-esfuerzo">Tamaño y esfuerzo</a>
+    <a href="#diagramas">Diagramas y matrices</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Riesgos</div>
+    <a href="#riesgos-intro">Qué es un riesgo</a>
+    <a href="#analisis-riesgos">Análisis cualitativo / cuantitativo</a>
+    <a href="#montecarlo">Simulación de Monte Carlo</a>
+    <a href="#planes-respuesta">Mitigación, contingencia y fallback</a>
+    <a href="#toma-decisiones">Toma de decisiones</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Análisis estratégico</div>
+    <a href="#foda-came">FODA y CAME</a>
+    <a href="#ponderacion-pestel">Ponderación y PESTEL</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Gestión técnica</div>
+    <a href="#configuracion">Config. y comité de cambios</a>
+    <a href="#versionado">Versionado (SemVer)</a>
+    <a href="#backup">Backup y RTO/RPO</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Cierre</div>
+    <a href="#seguimiento">Seguimiento y control</a>
+  </div>
+</aside>
+
+<!-- ============ CONTENT ============ -->
+<main class="content">
+
+  <div class="hero">
+    <div class="eyebrow">Caso guía · Consultora Tech Solutions</div>
+    <h1>Administración de Proyectos</h1>
+    <p class="lead">Resumen de teoría + ejemplos aplicados + posibles preguntas de parcial. Los ejemplos prácticos usan, cuando es posible, el caso de la consultora ficticia <strong>Tech Solutions</strong> (sistema de gestión de servicios profesionales) como hilo conductor.</p>
+    <div class="meta">
+      <div><strong>15 clases</strong>resumidas</div>
+      <div><strong>1 caso aplicado</strong>CE Consultores</div>
+      <div><strong>Monte Carlo</strong>tema propio</div>
+    </div>
+  </div>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="metodologias">
+    <div class="unit">Bloque 1 · Planificación</div>
+    <h2>Metodologías de gestión de proyectos</h2>
+    <p>Una <strong>metodología</strong> es un conjunto de principios, técnicas y procedimientos que define cómo se estructura, ejecuta y controla un proyecto. No hay una "mejor" metodología en términos absolutos: la elección depende de qué tan definidos están los requerimientos y cuánto cambio se espera durante el proyecto.</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-01 · comparación de metodologías</caption>
+        <thead>
+          <tr><th>Metodología</th><th>Enfoque</th><th>Mejor cuando...</th><th>Limitación clave</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Cascada (Waterfall)</strong></td><td>Secuencial, lineal, por fases</td><td>Requerimientos fijos y claros desde el inicio</td><td>Casi nula flexibilidad ante cambios</td></tr>
+          <tr><td><strong>Agile</strong></td><td>Iterativo e incremental, en sprints</td><td>Entorno cambiante, requisitos no definidos del todo</td><td>Difícil estimar plazos y costos con precisión</td></tr>
+          <tr><td><strong>Scrum</strong></td><td>Framework ágil con roles y eventos fijos</td><td>Equipos chicos, entregas frecuentes de valor</td><td>Exige disciplina y compromiso del equipo</td></tr>
+          <tr><td><strong>Kanban</strong></td><td>Flujo continuo, visual, sin sprints</td><td>Trabajo constante y cambiante, sin entregas cerradas</td><td>No define plazos de entrega</td></tr>
+          <tr><td><strong>Lean</strong></td><td>Eliminar desperdicio ("mudas"), valor para el cliente</td><td>Procesos repetitivos a optimizar / reducir costos</td><td>Requiere cambio cultural profundo</td></tr>
+          <tr><td><strong>XP</strong></td><td>Prácticas técnicas extremas (TDD, pair programming)</td><td>Equipos chicos, foco en calidad de código</td><td>Exige disponibilidad continua del cliente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Los 4 valores del Manifiesto Ágil</h3>
+    <ul class="clean">
+      <li>Individuos e interacciones <em>sobre</em> procesos y herramientas.</li>
+      <li>Software funcionando <em>sobre</em> documentación exhaustiva.</li>
+      <li>Colaboración con el cliente <em>sobre</em> negociación contractual.</li>
+      <li>Respuesta ante el cambio <em>sobre</em> seguir un plan.</li>
+    </ul>
+
+    <h3>Los 7 desperdicios de Lean (mudas)</h3>
+    <p class="subnote">Sobreproducción · Inventario · Defectos · Procesamiento excesivo · Transporte · Esperas · Movimientos innecesarios.</p>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p>Tech Solutions decide desarrollar su sistema con <strong>metodología Scrum</strong>, en sprints de 2 semanas, con ceremonias de Sprint Planning, Daily, Sprint Review y Retrospective. El equipo se dividió en 5 sub-equipos (Backend de clientes, Backend de solicitudes, Frontend cliente, Frontend administrador e Integraciones), cada uno con su propio backlog dentro del backlog general del producto, validado por un Product Owner que representa a Samantha y Gustavo (los socios de la consultora).</p>
+    </div>
+
+    <div class="qa-block">
+      <div class="unit">Posibles preguntas</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> ¿Por qué Scrum es más conveniente que Cascada para el caso Tech Solutions?</div>
+        <div class="qa-a">Porque los requerimientos del sistema (integraciones con WhatsApp, reportes, etc.) se fueron definiendo y ampliando a lo largo de varios documentos. Cascada exige requisitos cerrados desde el inicio; Scrum permite incorporar ajustes en cada sprint sin rehacer todo el proyecto.</div>
+      </div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> ¿Cuál es la diferencia entre Agile y Scrum?</div>
+        <div class="qa-a">Agile es una filosofía o conjunto de valores (el Manifiesto Ágil), no un proceso concreto. Scrum es un framework específico que implementa esa filosofía con roles (Product Owner, Scrum Master, equipo de desarrollo), eventos (sprints, dailies, reviews) y artefactos (Product Backlog, Sprint Backlog, Incremento) bien definidos.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="organizacion">
+    <h2>Organización de proyectos y jerarquía de conceptos</h2>
+    <p>Existe una cadena de conceptos que va de lo general (la estrategia de la empresa) a lo particular (lo que efectivamente se entrega):</p>
+
+    <div class="calc">objetivos de la empresa
+  └─ objetivos del proyecto
+        └─ metas del proyecto (el "cuánto y cuándo")
+              └─ plan de proyecto (documento integral)
+                    └─ hitos (puntos de control en el tiempo)
+                    └─ entregables (resultados tangibles)</div>
+
+    <div class="def"><strong>Hito vs. entregable:</strong> el hito es un punto en el tiempo (un evento), el entregable es un resultado tangible. El hito puede marcar la validación de un entregable, pero no es lo mismo.</div>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p><strong>Objetivo de la empresa:</strong> aumentar un 20% los ingresos digitalizando la atención al cliente.<br>
+      <strong>Objetivo del proyecto:</strong> desarrollar y lanzar el sistema de gestión de servicios en 4 meses.<br>
+      <strong>Meta del proyecto:</strong> tener el módulo de solicitudes funcionando antes del cierre del tercer sprint.<br>
+      <strong>Hito:</strong> aprobación del prototipo del panel de administrador por Samantha y Gustavo.<br>
+      <strong>Entregable:</strong> sistema web completo, con backend en PHP/Airtable e integración con WhatsApp Business API.</p>
+    </div>
+
+    <h3>Estructuras organizativas del proyecto</h3>
+    <div class="compare">
+      <div class="pill"><h4>Jerárquica</h4>Niveles de autoridad claramente definidos.</div>
+      <div class="pill"><h4>Matricial</h4>Combina áreas funcionales con proyectos específicos.</div>
+      <div class="pill"><h4>Ágil / colaborativa</h4>Menos jerarquía, más autonomía de los equipos.</div>
+    </div>
+
+    <div class="qa-block">
+      <div class="unit">Posibles preguntas</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> Dado un cronograma con tareas, fechas y un punto de control, identificá objetivo, meta, hito y entregable.</div>
+        <div class="qa-a">Se espera que se identifique: el objetivo es la declaración amplia de lo que se busca lograr con el proyecto; la meta es el valor concreto y medible (fecha + alcance); el hito es el evento puntual de control (por ejemplo, "entrega del prototipo aprobada"); el entregable es el producto final tangible que resulta del trabajo (por ejemplo, "módulo de registro de pacientes terminado").</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="equipos">
+    <h2>Equipos de trabajo</h2>
+    <p>"No todo grupo es un equipo: un grupo comparte espacio, un equipo comparte objetivos."</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-02 · grupo vs. equipo de trabajo</caption>
+        <thead><tr><th>Aspecto</th><th>Grupo de trabajo</th><th>Equipo de trabajo</th></tr></thead>
+        <tbody>
+          <tr><td>Interacción</td><td>Esporádica</td><td>Continua y cooperativa</td></tr>
+          <tr><td>Objetivo</td><td>Compartido, enfoques individuales</td><td>Compartido y prioritario</td></tr>
+          <tr><td>Responsabilidad</td><td>Individual</td><td>Colectiva</td></tr>
+          <tr><td>Decisiones</td><td>Jerárquica</td><td>Participativa</td></tr>
+          <tr><td>Desempeño</td><td>Suma de aportes</td><td>Sinergia</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Etapas de evolución de un grupo</h3>
+    <p class="subnote">Formación → Tormenta → Normalización → Desempeño → Disolución.</p>
+
+    <div class="qa-block">
+      <div class="unit">Posible pregunta</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> El equipo de Tech Solutions discute fuerte sobre cómo dividir el backend. ¿En qué etapa están?</div>
+        <div class="qa-a">En la etapa de <strong>tormenta</strong>: aparecen desacuerdos y luchas de criterios. Es una fase crítica; si se resuelve bien, el grupo se afianza y avanza hacia la normalización y luego el desempeño.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="dependencias">
+    <div class="unit">Bloque 2 · Cronograma</div>
+    <h2>Determinación de tareas y dependencias</h2>
+    <p>Una tarea bien definida tiene: nombre, descripción, meta, responsable(s), fecha de inicio/fin, criterios de completitud y un entregable asociado.</p>
+
+    <h3>Tipos de dependencia</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-03 · tipos de dependencia entre tareas</caption>
+        <thead><tr><th>Tipo</th><th>Significa</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Fin–Comienzo</strong></td><td>Una termina antes que la otra empiece</td><td>Backend debe terminar antes de integrar frontend</td></tr>
+          <tr><td><strong>Comienzo–Comienzo</strong></td><td>Pueden empezar juntas</td><td>Diseño de base de datos y definición de endpoints</td></tr>
+          <tr><td><strong>Fin–Fin</strong></td><td>Deben terminar al mismo tiempo</td><td>Testeo funcional y corrección de bugs críticos</td></tr>
+          <tr><td><strong>Comienzo–Fin</strong></td><td>Una no termina hasta que la otra empiece</td><td>Liberación final no concluye hasta empezar la validación</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p>En Tech Solutions, el <strong>Equipo 3</strong> (panel de clientes) no puede integrar sus formularios con datos reales hasta que el <strong>Equipo 1</strong> (backend de clientes) tenga los endpoints REST listos: es una dependencia <strong>Fin–Comienzo</strong>. En cambio, el diseño UI/UX del panel de clientes y la definición de endpoints del backend pueden avanzar en paralelo: dependencia <strong>Comienzo–Comienzo</strong>.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="gantt">
+    <h2>Diagrama de Gantt, ruta crítica y holgura</h2>
+    <div class="def">El <strong>Gantt</strong> es un gráfico de barras horizontales: cada fila es una tarea, el eje horizontal es tiempo. Muestra duración, secuencia, dependencias y, opcionalmente, hitos y avance.</div>
+
+    <h3>Método PERT (tiempo esperado)</h3>
+    <div class="calc">TE = ( O + 4M + P ) / 6
+
+O = tiempo optimista
+M = tiempo más probable
+P = tiempo pesimista</div>
+
+    <div class="example">
+      <div class="tag">Ejemplo numérico</div>
+      <p>Una tarea tiene estimación optimista de 4 días, más probable 6 días y pesimista 10 días.</p>
+      <div class="calc">TE = (4 + 4×6 + 10) / 6 = (4 + 24 + 10) / 6 = <span class="res">6,33 días</span></div>
+    </div>
+
+    <h3>Ruta crítica (CPM) y holgura</h3>
+    <p>La <strong>ruta crítica</strong> es la secuencia de tareas que determina la duración mínima del proyecto: cualquier retraso en ellas atrasa todo el proyecto (holgura = 0). La <strong>holgura</strong> (float) es el margen que tiene una tarea para demorarse sin afectar el plazo final.</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-04 · ejemplo de tabla de tareas para Gantt</caption>
+        <thead><tr><th>ID</th><th>Tarea</th><th>Predecesora</th><th class="num">Duración (días)</th><th>¿Ruta crítica?</th></tr></thead>
+        <tbody>
+          <tr><td>a</td><td>Diseño de base de datos</td><td>—</td><td class="num">3</td><td class="crit">Sí</td></tr>
+          <tr><td>b</td><td>Diseño UI panel cliente</td><td>—</td><td class="num">3</td><td class="ok">No (holgura 2)</td></tr>
+          <tr><td>c</td><td>Desarrollo endpoints</td><td>a</td><td class="num">5</td><td class="crit">Sí</td></tr>
+          <tr><td>d</td><td>Maquetado frontend</td><td>b</td><td class="num">4</td><td class="ok">No</td></tr>
+          <tr><td>e</td><td>Integración front-back</td><td>c, d</td><td class="num">4</td><td class="crit">Sí</td></tr>
+          <tr><td>f</td><td>Pruebas QA</td><td>e</td><td class="num">2</td><td class="crit">Sí</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="subnote">Las barras rojas en un Gantt indican ruta crítica (holgura 0); las azules, tareas con margen.</p>
+
+    <div class="qa-block">
+      <div class="unit">Posible pregunta</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> Dada una tarea con O=5, M=8, P=12, calculá el tiempo esperado por PERT.</div>
+        <div class="qa-a">TE = (5 + 4×8 + 12) / 6 = (5 + 32 + 12) / 6 = 49/6 = <strong>8,17 días</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="tamano-esfuerzo">
+    <h2>Estimación de tamaño y esfuerzo</h2>
+
+    <h3>Técnicas de estimación de tamaño</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-05 · técnicas de estimación de tamaño de software</caption>
+        <thead><tr><th>Técnica</th><th>Mide</th><th>Ventaja</th><th>Limitación</th></tr></thead>
+        <tbody>
+          <tr><td><strong>LOC</strong> (líneas de código)</td><td>Cantidad de líneas escritas</td><td>Simple y directo</td><td>No sirve en etapas tempranas, varía según lenguaje</td></tr>
+          <tr><td><strong>Puntos de función</strong></td><td>Valor funcional entregado al usuario</td><td>Aplicable desde el análisis, sin código</td><td>Clasificación de complejidad puede ser subjetiva</td></tr>
+          <tr><td><strong>Puntos de caso de uso</strong></td><td>Actores + casos de uso + factores técnicos</td><td>Ideal para proyectos UML / OO</td><td>Requiere modelo de casos de uso ya definido</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="tag">Ejemplo LOC</div>
+      <p>Si una persona produce 50 LOC por día y el proyecto requiere 10.000 LOC:</p>
+      <div class="calc">Esfuerzo = 10.000 / 50 = <span class="res">200 días-persona</span></div>
+    </div>
+
+    <div class="example">
+      <div class="tag">Ejemplo puntos de caso de uso</div>
+      <p>Si la tasa histórica de productividad es 20 horas por punto de caso de uso, y el sistema tiene 50 puntos de caso de uso ajustados:</p>
+      <div class="calc">Esfuerzo = 20 × 50 = <span class="res">1.000 horas</span></div>
+    </div>
+
+    <h3>Modelo COCOMO</h3>
+    <div class="calc">Esfuerzo = a × (Tamaño)^b
+(Tamaño en KLOC o puntos de función; "a" y "b" según tipo de proyecto: orgánico &lt; 50 KLOC, semiensamblado 50–300 KLOC, empotrado &gt; 300 KLOC)</div>
+
+    <div class="qa-block">
+      <div class="unit">Posibles preguntas</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> ¿Por qué los puntos de función son más confiables que LOC en etapas tempranas?</div>
+        <div class="qa-a">Porque miden el valor funcional desde los requerimientos (entradas, salidas, consultas, archivos lógicos), sin depender del lenguaje de programación ni de que exista código escrito. LOC solo puede medirse una vez que el desarrollo ya está en marcha.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="diagramas">
+    <h2>Puntos de control, diagramas y matrices</h2>
+    <p>Los <strong>puntos de control</strong> son hitos del cronograma donde se evalúa si el proyecto continúa, se ajusta o se detiene, mirando cronograma, presupuesto, calidad, alcance y riesgos.</p>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p>Al finalizar el sprint del módulo de solicitudes en Tech Solutions, el punto de control revela: 90% de tareas técnicas completas, 2 funcionalidades sin pasar pruebas y un 15% de sobrecosto del sprint. El comité decide sumar 2 días antes del próximo sprint para corregir errores.</p>
+    </div>
+
+    <h3>Tipos de diagramas y matrices</h3>
+    <ul class="clean">
+      <li><strong>Diagrama de red:</strong> nodos y flechas que muestran dependencias y secuencia; base de CPM/PERT.</li>
+      <li><strong>Diagrama de matriz (L, Y, C, T, X):</strong> tabla que cruza dos o más conjuntos de elementos (tareas vs. equipos, por ejemplo).</li>
+      <li><strong>Matriz de priorización:</strong> ordena alternativas según criterios ponderados (impacto, urgencia, esfuerzo).</li>
+      <li><strong>Diagrama de afinidad:</strong> agrupa ideas sueltas (post-its de un brainstorming) en temas comunes.</li>
+    </ul>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="riesgos-intro">
+    <div class="unit">Bloque 3 · Riesgos</div>
+    <h2>Qué es un riesgo y de dónde viene</h2>
+    <div class="def"><strong>Riesgo ≠ problema.</strong> El problema ya está ocurriendo y exige acción correctiva inmediata. El riesgo es una posibilidad futura sobre la cual se puede actuar de forma preventiva.</div>
+
+    <p>Componentes de un riesgo: <strong>evento</strong> (qué podría pasar) + <strong>causa</strong> (qué lo origina) + <strong>consecuencia</strong> (impacto si ocurre).</p>
+
+    <h3>Técnicas de identificación</h3>
+    <p class="subnote">Lluvia de ideas (brainstorming) · Entrevistas · Revisión de proyectos anteriores.</p>
+
+    <h3>Fuentes de riesgo</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-06 · fuentes de riesgo</caption>
+        <thead><tr><th>Fuente</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Técnico</td><td>Tecnología poco probada; integración compleja con WhatsApp Business API</td></tr>
+          <tr><td>Humano</td><td>Falta de experiencia del equipo en PHP/Airtable</td></tr>
+          <tr><td>Financiero / presupuesto</td><td>Inflación que encarece licencias de software de gestión</td></tr>
+          <tr><td>Legal</td><td>Incumplimiento de protección de datos al manejar info de clientes vía WhatsApp</td></tr>
+          <tr><td>Organizacional</td><td>Falta de apoyo de Samantha y Gustavo a un cambio de alcance</td></tr>
+          <tr><td>Externo</td><td>Caída del proveedor de la API de WhatsApp Business</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="qa-block">
+      <div class="unit">Posible pregunta</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> Identificá un riesgo encadenado (efecto dominó) en el caso Tech Solutions.</div>
+        <div class="qa-a">Un riesgo financiero (suba del tipo de cambio que encarece el hosting o las licencias) puede derivar en un riesgo técnico (no se puede pagar el servicio de integración con PagoNet, y la facturación automática deja de funcionar). Esto muestra cómo las fuentes de riesgo no son independientes entre sí.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="analisis-riesgos">
+    <h2>Análisis cualitativo y cuantitativo</h2>
+
+    <div class="compare">
+      <div class="pill"><h4>Cualitativo</h4>Categorías descriptivas (alta/media/baja). Herramienta típica: <strong>matriz de probabilidad e impacto</strong>. Rápido, pero subjetivo.</div>
+      <div class="pill"><h4>Cuantitativo</h4>Números y modelos matemáticos. Herramienta típica: <strong>EMV</strong> (Valor Monetario Esperado). Más preciso, pero exige datos confiables.</div>
+    </div>
+
+    <h3>Valor Monetario Esperado (EMV)</h3>
+    <div class="calc">EMV = Probabilidad del riesgo × Impacto económico</div>
+    <div class="example">
+      <div class="tag">Ejemplo numérico</div>
+      <p>Riesgo: caída del proveedor de WhatsApp Business durante un mes, con probabilidad 20% (0,2) e impacto económico estimado de USD 10.000 en clientes perdidos.</p>
+      <div class="calc">EMV = 0,2 × 10.000 = <span class="res">USD 2.000</span> (reserva de contingencia a prever)</div>
+    </div>
+
+    <h3>Árbol de decisión</h3>
+    <p>Compara alternativas usando el <strong>costo esperado</strong> de cada rama (probabilidad de éxito × costo de éxito + probabilidad de falla × costo de falla).</p>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-07 · ejemplo: desarrollar interno vs. comprar software externo</caption>
+        <thead><tr><th>Opción</th><th class="num">Costo éxito</th><th class="num">Prob. éxito</th><th class="num">Costo falla</th><th class="num">Prob. falla</th><th class="num">Costo esperado</th></tr></thead>
+        <tbody>
+          <tr><td>Desarrollo interno</td><td class="num">$50.000</td><td class="num">80%</td><td class="num">$70.000</td><td class="num">20%</td><td class="num ok">$54.000</td></tr>
+          <tr><td>Comprar software externo</td><td class="num">$60.000</td><td class="num">90%</td><td class="num">$90.000</td><td class="num">10%</td><td class="num crit">$63.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="subnote">Conviene la opción de menor costo esperado: desarrollo interno ($54.000 &lt; $63.000).</p>
+
+    <div class="qa-block">
+      <div class="unit">Posible pregunta</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> Un riesgo tiene 30% de probabilidad y un impacto económico de $15.000. Calculá el EMV.</div>
+        <div class="qa-a">EMV = 0,30 × 15.000 = <strong>$4.500</strong>. Ese monto debería reservarse como previsión de contingencia.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="montecarlo">
+    <h2>Simulación de Monte Carlo <span class="badge">tema propio</span></h2>
+    <p>Es un método estadístico que genera <strong>números aleatorios</strong> para simular miles de veces el resultado de un sistema incierto (duración, costo, utilidad), obteniendo una <strong>distribución de resultados posibles</strong> en lugar de un único número.</p>
+
+    <div class="def">
+      <strong>¿Por qué se usa?</strong> Porque los escenarios "optimista / esperado / pesimista" (como en clase 06) sólo dan 3 puntos sueltos, sin decir qué tan probable es cada uno. Monte Carlo, en cambio, asigna una <strong>distribución de probabilidad</strong> a cada variable incierta y corre el modelo miles de veces, dando una visión estadística completa (promedio, mediana, percentiles, probabilidad de pérdida).
+    </div>
+
+    <h3>Procedimiento general</h3>
+    <ul class="clean">
+      <li>1. Identificar las variables inciertas del proyecto (costo de mano de obra, demanda, duración de una tarea, etc.).</li>
+      <li>2. Asignar una distribución de probabilidad a cada variable (triangular, uniforme, normal, discreta).</li>
+      <li>3. Generar valores aleatorios para cada variable según su distribución (en Excel: <code>=ALEATORIO()</code>).</li>
+      <li>4. Calcular el resultado global del proyecto con esos valores (una "corrida" o ensayo).</li>
+      <li>5. Repetir el proceso miles de veces.</li>
+      <li>6. Analizar los resultados: promedio, mínimo, máximo, percentiles, probabilidad de cumplir el objetivo.</li>
+    </ul>
+
+    <h3>Ejemplo de clase: duración de una tarea con distribución triangular</h3>
+    <p>Una tarea tiene duración mínima de 5 días, más probable 8 días y máxima de 12 días. Se simulan 10 ensayos:</p>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-08 · simulación de 10 ensayos</caption>
+        <thead><tr><th class="num">N° simulación</th><th class="num">Duración simulada (días)</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td class="num">7,2</td></tr>
+          <tr><td class="num">2</td><td class="num">8,5</td></tr>
+          <tr><td class="num">3</td><td class="num">6,1</td></tr>
+          <tr><td class="num">4</td><td class="num">9,0</td></tr>
+          <tr><td class="num">5</td><td class="num">7,8</td></tr>
+          <tr><td class="num">6</td><td class="num">11,0</td></tr>
+          <tr><td class="num">7</td><td class="num">5,3</td></tr>
+          <tr><td class="num">8</td><td class="num">8,2</td></tr>
+          <tr><td class="num">9</td><td class="num">6,7</td></tr>
+          <tr><td class="num">10</td><td class="num">9,5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="calc">Promedio = (7,2+8,5+6,1+9,0+7,8+11,0+5,3+8,2+6,7+9,5) / 10 = <span class="res">7,93 días</span>
+Mínimo simulado = 5,3 · Máximo simulado = 11,0</div>
+    <p class="subnote">Conclusión: el tiempo esperado ronda los 8 días, pero podría variar entre 5 y 11 días según el escenario.</p>
+
+    <h3>Aplicación con Excel (paper de Azofeifa) y caso de negocio</h3>
+    <p>El paper de referencia aplica Monte Carlo a la decisión de lanzar un producto nuevo (una impresora), con tres variables inciertas: costo de mano de obra (distribución discreta), costo de componentes (distribución uniforme) y demanda del primer año (distribución normal). La utilidad se calcula con la fórmula:</p>
+    <div class="calc">Utilidad = (Precio venta − Costo M.O. − Costo componentes) × Demanda − Costos fijos</div>
+    <p>Con sólo 3 escenarios (pesimista / esperado / optimista) el rango iba de una <strong>pérdida de $123.000.000</strong> a una <strong>ganancia de $757.500.000</strong>, sin saber qué tan probable era cada extremo. Corriendo cientos de simulaciones en Excel (generando valores aleatorios para cada variable y recalculando la utilidad en cada fila), se obtiene una distribución completa y, por ejemplo, un <strong>intervalo de confianza del 95%</strong> para la utilidad esperada — en el ejemplo del paper, entre $126,8 y $189,8 millones, con mejor estimación puntual de $158,3 millones.</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-09 · funciones de Excel típicas usadas en Monte Carlo</caption>
+        <thead><tr><th>Variable</th><th>Distribución</th><th>Fórmula en Excel</th></tr></thead>
+        <tbody>
+          <tr><td>Costo de mano de obra</td><td>Discreta</td><td><code>=BUSCARV(ALEATORIO();rango_probabilidades;3;VERDADERO)</code></td></tr>
+          <tr><td>Costo de componentes</td><td>Uniforme [a,b]</td><td><code>= a + (b−a) × ALEATORIO()</code></td></tr>
+          <tr><td>Demanda</td><td>Normal (μ, σ)</td><td><code>=DISTR.NORM.INV(ALEATORIO(); μ; σ)</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p>Para estimar la duración total del proyecto de Tech Solutions, el equipo podría modelar cada sprint con una distribución triangular (mínimo / más probable / máximo de días), correr 1.000 simulaciones sumando los sprints, y así responder con probabilidad concreta a una pregunta como "¿qué tan probable es que terminemos el sistema en 4 meses?", en vez de dar una única fecha optimista.</p>
+    </div>
+
+    <div class="qa-block">
+      <div class="unit">Posibles preguntas</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> ¿Qué ventaja tiene Monte Carlo frente al análisis de tres escenarios (optimista/probable/pesimista)?</div>
+        <div class="qa-a">El análisis de escenarios sólo da tres puntos sueltos sin indicar su probabilidad de ocurrencia. Monte Carlo, al simular miles de combinaciones posibles de variables, entrega una distribución completa de resultados, permitiendo calcular promedios, percentiles e intervalos de confianza, y saber qué tan probable es cada desenlace.</div>
+      </div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> ¿Cuáles son las principales limitaciones de la simulación de Monte Carlo?</div>
+        <div class="qa-a">Requiere definir distribuciones de probabilidad realistas para cada variable (lo cual no siempre es sencillo), necesita herramientas computacionales para correr muchas simulaciones, y la calidad del resultado depende totalmente de la calidad de los datos y supuestos iniciales: "basura entra, basura sale".</div>
+      </div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> ¿Por qué se usan números aleatorios entre 0 y 1 como punto de partida?</div>
+        <div class="qa-a">Porque cada número aleatorio uniforme en [0,1) se transforma matemáticamente (vía la distribución elegida) en un valor representativo de la variable incierta, respetando que cada valor posible aparezca con la misma frecuencia con la que ocurriría en la realidad.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="planes-respuesta">
+    <h2>Planes de mitigación, contingencia y fallback</h2>
+
+    <div class="compare">
+      <div class="pill warn"><h4>Mitigación</h4>Proactivo. Reduce la <em>probabilidad</em> o el impacto antes de que el riesgo ocurra.</div>
+      <div class="pill"><h4>Contingencia</h4>Reactivo. Qué hacer <em>cuando</em> el riesgo ya se materializó (plan B).</div>
+      <div class="pill warn"><h4>Fallback</h4>Última instancia, si el plan de contingencia no alcanza a controlar el daño.</div>
+    </div>
+
+    <div class="example">
+      <div class="tag">Analogía de la bicicleta (clase 11)</div>
+      <p><strong>Mitigación:</strong> revisar las cubiertas semanalmente para reducir la chance de pinchazo.<br><strong>Contingencia:</strong> llevar siempre kit de reparación y cámara de repuesto.<br><strong>Fallback:</strong> si el pinchazo es grave, tomar un taxi para llegar a tiempo.</p>
+    </div>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p><strong>Mitigación:</strong> Tech Solutions firma un SLA con redundancia de proveedor para la API de WhatsApp.<br><strong>Contingencia:</strong> si la API cae, el sistema deriva automáticamente las notificaciones a email.<br><strong>Fallback:</strong> si tanto WhatsApp como email fallan, los administradores contactan manualmente a los clientes prioritarios por teléfono.</p>
+    </div>
+
+    <h3>Reservas para riesgos desconocidos</h3>
+    <p class="subnote">Reserva para contingencias → riesgos identificados. Reserva gerencial → riesgos no identificados, requiere autorización especial.</p>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="toma-decisiones">
+    <h2>Toma de decisiones</h2>
+    <p>Etapas: identificar el problema/riesgo → recopilar y analizar información → generar alternativas → evaluar alternativas → seleccionar la mejor → implementar → seguimiento y ajuste.</p>
+    <p class="subnote">Influyen: calidad de la información disponible, experiencia del equipo, cultura organizacional (tolerancia al riesgo), recursos disponibles, sesgos cognitivos y entorno externo.</p>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="foda-came">
+    <div class="unit">Bloque 4 · Análisis estratégico</div>
+    <h2>Análisis FODA y Matriz CAME</h2>
+    <p>El <strong>FODA</strong> (Fortalezas, Oportunidades, Debilidades, Amenazas) diagnostica; la <strong>CAME</strong> (Corregir, Afrontar, Mantener, Explotar) define qué hacer con cada cuadrante.</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-10 · FODA y su estrategia CAME asociada</caption>
+        <thead><tr><th>Cuadrante FODA</th><th>Naturaleza</th><th>Acción CAME</th></tr></thead>
+        <tbody>
+          <tr><td>Fortalezas</td><td>Interna</td><td><strong>Mantener</strong></td></tr>
+          <tr><td>Oportunidades</td><td>Externa</td><td><strong>Explotar</strong></td></tr>
+          <tr><td>Debilidades</td><td>Interna</td><td><strong>Corregir</strong></td></tr>
+          <tr><td>Amenazas</td><td>Externa</td><td><strong>Afrontar</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p><strong>Fortaleza:</strong> equipo joven con conocimiento de metodologías ágiles → <em>mantener</em> capacitándolo.<br><strong>Oportunidad:</strong> crecimiento del sector de servicios profesionales pospandemia → <em>explotar</em> acelerando el lanzamiento.<br><strong>Debilidad:</strong> procesos manuales y dispersos en notebooks individuales → <em>corregir</em> con el nuevo sistema.<br><strong>Amenaza:</strong> dependencia de APIs externas (WhatsApp, PagoNet) fuera de su control → <em>afrontar</em> con planes de contingencia.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="ponderacion-pestel">
+    <h2>Matriz de ponderación y Análisis PESTEL</h2>
+
+    <h3>Matriz de ponderación</h3>
+    <p>Asigna un peso relativo (%) a cada criterio de decisión, califica cada alternativa (ej. 1 a 5) y multiplica peso × calificación para obtener un puntaje objetivo.</p>
+
+    <div class="example">
+      <div class="tag">Caso aplicado — elegir herramienta de versionado</div>
+      <p>Tech Solutions debe elegir entre Git, SVN y Mercurial para versionar su código.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-11 · matriz de ponderación: selección de herramienta de versionado</caption>
+        <thead><tr><th>Criterio</th><th class="num">Ponderación</th><th class="num">Git</th><th class="num">SVN</th><th class="num">Mercurial</th></tr></thead>
+        <tbody>
+          <tr><td>Trabajo distribuido / offline</td><td class="num">0,35</td><td class="num">5</td><td class="num">2</td><td class="num">5</td></tr>
+          <tr><td>Curva de aprendizaje</td><td class="num">0,20</td><td class="num">3</td><td class="num">4</td><td class="num">4</td></tr>
+          <tr><td>Integración con plataformas (GitHub, etc.)</td><td class="num">0,30</td><td class="num">5</td><td class="num">2</td><td class="num">3</td></tr>
+          <tr><td>Soporte de la comunidad</td><td class="num">0,15</td><td class="num">5</td><td class="num">3</td><td class="num">2</td></tr>
+          <tr><th>Total ponderado</th><th class="num">1,00</th><th class="num ok">4,55</th><th class="num">2,55</th><th class="num">3,75</th></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="subnote">Cálculo de Git: 5×0,35 + 3×0,20 + 5×0,30 + 5×0,15 = 1,75 + 0,60 + 1,50 + 0,75 = 4,55. Resultado: se elige Git por tener el mayor puntaje ponderado.</p>
+
+    <h3>Análisis PESTEL</h3>
+    <p class="subnote">Político · Económico · Sociocultural · Tecnológico · Ecológico · Legal.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-12 · PESTEL aplicado a Tech Solutions</caption>
+        <thead><tr><th>Factor</th><th>Aspecto clave</th><th>Impacto</th></tr></thead>
+        <tbody>
+          <tr><td>Económico</td><td>Inflación y tipo de cambio en Argentina</td><td>Encarece licencias y hosting cotizados en dólares</td></tr>
+          <tr><td>Tecnológico</td><td>Avance de chatbots e IA</td><td>Permite automatizar la primera línea de atención por WhatsApp</td></tr>
+          <tr><td>Legal</td><td>Protección de datos personales de clientes</td><td>Exige políticas de seguridad para integraciones como VeriCheck</td></tr>
+          <tr><td>Sociocultural</td><td>Preferencia creciente por WhatsApp como canal</td><td>Justifica priorizar la integración con Meta</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="configuracion">
+    <div class="unit">Bloque 5 · Gestión técnica</div>
+    <h2>Administración de la configuración y comité de cambios</h2>
+    <p>La <strong>ACS</strong> identifica, organiza y controla todos los elementos del proyecto (código, documentación, scripts, configuraciones de servidores) y sus cambios, asegurando saber siempre qué versión existe, qué cambió, quién lo autorizó y dónde está.</p>
+
+    <h3>Roles típicos del Comité de Control de Cambios</h3>
+    <p class="subnote">Configuration Manager · Líder del proyecto · Representantes de desarrollo · Representantes de calidad · Stakeholders / Product Owner.</p>
+
+    <div class="example">
+      <div class="tag">Caso aplicado</div>
+      <p>Si el Equipo 3 de Tech Solutions propone agregar un campo nuevo al formulario de solicitudes que afecta la estructura de datos en Airtable, esa modificación debe pasar por el comité de cambios: se evalúa impacto técnico (¿rompe los endpoints del Equipo 1?), se aprueba o rechaza, y se documenta para trazabilidad.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="versionado">
+    <h2>Versionado de software (SemVer)</h2>
+    <div class="calc">MAJOR.MINOR.PATCH
+
+MAJOR → cambios incompatibles con versiones anteriores
+MINOR → nuevas funcionalidades compatibles
+PATCH → correcciones que no rompen compatibilidad</div>
+
+    <div class="example">
+      <div class="tag">Ejemplo</div>
+      <p>El sistema de Tech Solutions está en versión <strong>2.3.5</strong>.</p>
+      <ul class="clean">
+        <li>Se corrige un bug menor en notificaciones → <strong>2.3.6</strong> (PATCH)</li>
+        <li>Se agrega el módulo de integración con AnalytixPro (compatible) → <strong>2.4.0</strong> (MINOR)</li>
+        <li>Se cambia la forma en que se almacenan los datos del cliente (rompe compatibilidad) → <strong>3.0.0</strong> (MAJOR)</li>
+      </ul>
+    </div>
+
+    <h3>Centralizado vs. distribuido</h3>
+    <div class="compare">
+      <div class="pill"><h4>Centralizado (SVN, CVS)</h4>Un repositorio maestro; depende de la conexión al servidor.</div>
+      <div class="pill good"><h4>Distribuido (Git, Mercurial)</h4>Cada desarrollador tiene copia completa del historial; permite trabajar offline.</div>
+    </div>
+
+    <div class="qa-block">
+      <div class="unit">Posible pregunta</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> El sistema pasa de la versión 1.4.2 a la 1.5.0. ¿Qué tipo de cambio se hizo?</div>
+        <div class="qa-a">Se incrementó el número MINOR (de 4 a 5) y el PATCH volvió a 0: significa que se agregó una nueva funcionalidad compatible con versiones anteriores, sin romper nada existente.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="backup">
+    <h2>Backup, RTO y RPO</h2>
+    <p>Regla <strong>3-2-1</strong>: 3 copias de los datos, en 2 medios distintos, con 1 copia fuera del sitio principal.</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-13 · tipos de backup</caption>
+        <thead><tr><th>Tipo</th><th>Qué copia</th><th>Pro / contra</th></tr></thead>
+        <tbody>
+          <tr><td>Completo</td><td>Todos los datos</td><td>Más seguro, pero pesado y lento</td></tr>
+          <tr><td>Incremental</td><td>Sólo lo cambiado desde el último backup (de cualquier tipo)</td><td>Rápido y liviano; restauración más lenta</td></tr>
+          <tr><td>Diferencial</td><td>Lo cambiado desde el último backup completo</td><td>Equilibrio entre espacio y velocidad de restauración</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="compare">
+      <div class="pill"><h4>RTO (Recovery Time Objective)</h4>Tiempo máximo tolerable para que el sistema vuelva a estar operativo.</div>
+      <div class="pill"><h4>RPO (Recovery Point Objective)</h4>Antigüedad máxima de datos que se puede permitir perder.</div>
+    </div>
+
+    <div class="example">
+      <div class="tag">Ejemplo</div>
+      <p>Si Tech Solutions hace backups cada 30 minutos, su <strong>RPO</strong> es de 30 minutos (como máximo se pierde media hora de solicitudes). Si definieron que el sistema debe volver a estar online en menos de 4 horas tras una caída, ese es su <strong>RTO</strong>.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <section class="topic" id="seguimiento">
+    <div class="unit">Bloque 6 · Cierre</div>
+    <h2>Seguimiento y control de proyectos</h2>
+    <p>El seguimiento es el puente entre la planificación (qué se debe hacer) y el control (verificar cómo se está ejecutando).</p>
+
+    <h3>Indicadores clave (KPIs) más usados</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>tabla-14 · KPIs de seguimiento</caption>
+        <thead><tr><th>Indicador</th><th>Qué mide</th></tr></thead>
+        <tbody>
+          <tr><td>Avance de cronograma</td><td>Tareas finalizadas / total planificado</td></tr>
+          <tr><td>Índice de desempeño de cronograma (SPI)</td><td>Trabajo realizado vs. planificado</td></tr>
+          <tr><td>Índice de desempeño de costos (CPI)</td><td>Valor ganado vs. costo real</td></tr>
+          <tr><td>Tasa de resolución de incidencias</td><td>Incidencias resueltas / reportadas</td></tr>
+          <tr><td>Satisfacción del cliente</td><td>Encuestas / feedback en puntos de control</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="tag">Caso aplicado — dashboard semanal</div>
+      <p>Avance de cronograma: 65% completado vs. 70% planificado (demora leve). SPI = 0,92 (8% atrasado). CPI = 1,05 (cada $1 gastado generó $1,05 de valor: eficiencia en costos). Errores abiertos: 35 de 120 detectados. Satisfacción del cliente: 9,2/10.</p>
+    </div>
+
+    <h3>Líneas base</h3>
+    <p>Son versiones formales y aprobadas del plan (alcance, cronograma, costos) contra las que se mide el desempeño real. Cualquier modificación debe pasar por control de cambios para mantener trazabilidad.</p>
+
+    <div class="qa-block">
+      <div class="unit">Posible pregunta</div>
+      <div class="qa">
+        <div class="qa-q"><span class="marker">+</span> Si el SPI es 0,85 y el CPI es 1,10, ¿qué le está pasando al proyecto?</div>
+        <div class="qa-a">El proyecto está atrasado en cronograma (SPI &lt; 1: se está ejecutando menos trabajo del planificado) pero es eficiente en costos (CPI &gt; 1: se obtiene más valor por cada peso gastado). Es un proyecto "lento pero económico", lo cual sugiere revisar la asignación de recursos para acelerar el ritmo sin perder esa eficiencia.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Guía elaborada a partir de las clases 06–15 de Administración de Proyectos, el caso "CE Consultores — Sistema de Gestión de Servicios Profesionales" y el paper de C. Azofeifa sobre Simulación de Monte Carlo en Excel. Material de estudio personal — no oficial.
+  </footer>
+
+</main>
+</div>
+
+<script>
+// Acordeón de preguntas
+document.querySelectorAll('.qa-q').forEach(function(q){
+  q.addEventListener('click', function(){
+    q.parentElement.classList.toggle('open');
+  });
+});
+
+// Resaltado de sección activa en el sidebar
+const links = document.querySelectorAll('.sidebar a');
+const sections = document.querySelectorAll('section.topic');
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id = entry.target.getAttribute('id');
+      links.forEach(l=>l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+    }
+  });
+}, {rootMargin:'-15% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
